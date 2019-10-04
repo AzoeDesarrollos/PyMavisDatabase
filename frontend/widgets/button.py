@@ -6,13 +6,14 @@ from frontend import Renderer, WidgetHandler
 class Button(BaseWidget):
     action = None
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, texto, action=None):
         self.f = font.SysFont('Verdana', 16)
-        imagen = self.crear('Consulta')
+        imagen = self.crear(texto)
         rect = imagen.get_rect(topleft=(x, y))
         super().__init__(imagen, rect)
         Renderer.add_widget(self, 1)
         WidgetHandler.add_widget(self, 1)
+        self.action = action
 
     def crear(self, texto):
         w, h = self.f.size(texto)

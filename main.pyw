@@ -1,10 +1,12 @@
 from frontend import Renderer, WidgetHandler
-from backend import EventHandler
+from backend import EventHandler, cargar_db
 from frontend.widgets import *
 
-b = Button(205, 50)
-e = Entry(0, 50, b)
-label = Label('', 0, 100)
+Label('etq', 'Producto:', 0, 50)
+Button(0,0, 'Recargar DBs', cargar_db)
+e = Entry(80, 50)
+Button(e.rect.right+10, 50, 'Consulta', e.button_trigger)
+Label('precio', '', 0, 100)
 
 while True:
     EventHandler.process()

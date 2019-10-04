@@ -56,4 +56,6 @@ def probar_input(item, palabras):
         if dist == 0:
             return cercana
         elif not(dist <= -1 or dist > 3):
-            return '¿Quizo decir' + ': ' + cercana + '? '
+            return 'Quizás quizo decir ' + '"' + cercana + '"'
+        elif dist == -1:
+            return 'La base de datos parece estar vacía, haga clic en "Recargar DBs" e inténtelo nuevamente.'

@@ -42,6 +42,8 @@ class WidgetHandler:
                     cls.active.on_keyup(e.key)
 
             elif e.type == MOUSEBUTTONDOWN:
+                for wig in cls.contents:
+                    wig.active = False
                 widgets = [i for i in cls.contents.sprites() if i.rect.collidepoint(e.pos)]
                 for w in widgets:
                     w.on_mousebuttondown(e.button)
