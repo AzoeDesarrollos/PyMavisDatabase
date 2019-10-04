@@ -1,3 +1,6 @@
+from .eventhandler import EventHandler
+from pygame import quit
+from sys import exit
 import csv
 
 csv.register_dialect('myCSV', delimiter=';')
@@ -26,3 +29,13 @@ def trim(line, delete_empty=True):
         return [item.strip() for item in line if item != '']
     else:
         return [item.strip() for item in line]
+
+
+def salir_handler(event):
+    quit()
+    data = event.data.get('mensaje', '')
+    print('Saliendo...\nStatus: ' + data)
+    exit()
+
+
+EventHandler.register(salir_handler, 'salir')

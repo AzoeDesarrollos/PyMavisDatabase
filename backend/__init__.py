@@ -1,1 +1,2 @@
-from .database import db
+from .database import cursor
+from .resources import *
