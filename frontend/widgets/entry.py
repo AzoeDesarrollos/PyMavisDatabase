@@ -47,7 +47,7 @@ class Entry(BaseWidget):
         elif name == 'backspace':
             self.del_character()
         elif name == 'enter' or name == 'return':
-            pass
+            self.button_trigger()
         elif name.isalnum():
             if shift:
                 name = name.upper()
@@ -86,6 +86,6 @@ class Entry(BaseWidget):
             self.dirty = 1
 
         if 10 < self.ticks < 30 and len(self.input) and self.active:
-            draw.aaline(self.image, self.color_texto, (rr.right-80 + 2, 3), (rr.right-80 + 2, self.h - 3))
+            draw.aaline(self.image, self.color_texto, (rr.right-self.rect.x + 2, 3), (rr.right-80 + 2, self.h - 3))
         elif self.ticks > 40:
             self.ticks = 0

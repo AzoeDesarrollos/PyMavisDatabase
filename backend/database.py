@@ -1,5 +1,6 @@
 from .resources import read_cvs, is_empty, trim
 from sqlite3 import *
+from os import path, getcwd
 
 
 def process_devir(ruta):
@@ -52,7 +53,7 @@ def process_sd_dist(ruta):
 
 db = connect(':memory:')
 cursor = db.cursor()
-cursor.execute('''CREATE TABLE devir (codigo INTEGER PRIMARY KEY ASC, 
+cursor.execute('''CREATE TABLE devir (codigo INTEGER PRIMARY KEY ASC,
                                     nombre text NOT NULL, 
                                     unit integer NOT NULL, 
                                     sugerido integer NOT NULL, 
@@ -82,24 +83,23 @@ cursor.execute('''CREATE TABLE ventas (codigo integer PRIMARY KEY AUTOINCREMENT,
 
 
 def cargar_db():
-    for linea in process_devir('data/Lista_de_Precios_Devirb.csv'):
+    root = getcwd()
+    for linea in process_devir(path.join(root, 'data/Lista_de_Precios_Devirb.csv')):
         try:
             linea = linea[1:]
             cursor.execute("INSERT INTO devir (nombre, unit, sugerido, pedido, otro) "
                            "VALUES ({})".format(','.join(['?' for i in range(len(linea))])), linea)
-            print('valor insertado')
         except IntegrityError as error:
             print('la línea', linea, 'no se pudo agregar por', error)
 
-    for linea in process_sd_dist('data/LISTADO_SD_DISTRIBUCIONES_19_07_2019b.csv'):
+    for linea in process_sd_dist(path.join(root, 'data/LISTADO_SD_DISTRIBUCIONES_19_07_2019b.csv')):
         try:
             cursor.execute("INSERT INTO sd_dist VALUES ({})".format(','.join(['?' for i in range(len(linea))])), linea)
-            print('valor insertado')
         except IntegrityError as error:
             print('la línea', linea, 'no se pudo agregar por', error)
 
 
-# cargar_db()
+cargar_db()
 db.commit()
 
 __all__ = [
